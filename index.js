@@ -1,8 +1,13 @@
-module.exports = function piglatin(string) {
+export default function piglatin(string) {
   const speechSynth = window.speechSynthesis;
-  const pigString = new SpeechSynthesisUtterance(`Default Text`);
+  const pigString = new SpeechSynthesisUtterance("hi");
   pigString.text = string
-    .replace(/^([aeiouy])(._)/, "$1$2way")
-    .replace(/^(_[_^aeiouy]+)(._)/, "$2$1ay");
+    .split(" ")
+    .map((word) =>
+      word
+        .replace(/^[aeiou]\w*/, "$&way")
+        .replace(/(^[^aeiou]+)(\w*)/, "$2$1ay")
+    )
+    .join(" ");
   speechSynth.speak(pigString);
-};
+}
